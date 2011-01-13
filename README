@@ -1,0 +1,13 @@
+TWEADING LIST
+=============
+
+Tweading List is a one script fun hack that takes your Twitter account name and uses it to generate a list of books that you might like from Google Book search.
+
+Requirements:
+Other than PHP, Tweading List requires that you all file_get_contents to use HTTP in your PHP config. If you don't want to do this then you could fork the code and add CURL, but as this was just for fun I didn't bother.
+
+Design:
+Design stuff and HTML output is hard coded in, but you can obvious strip the code from the output if you want to use this on your website or in an application.
+
+Next Steps:
+None, really. I just wanted to set up a Git repository for demonstrating GitHub that had a bit more in it than just a README file!
