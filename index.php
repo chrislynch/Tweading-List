@@ -1,157 +1,94 @@
-<html>
-<head>
-	<title>tweadingList</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Tweading List: Book Recommendations from your Tweets</title>
+<meta name="description" content="Tweading List analyses your tweets to provide book recommendations">
+<meta name="keywords" content="twitter, book recommendations, twitter games">
+
+
+<link href="style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<h3>tweadingList: Book recommendations based on your tweets</h3>
-<form action="index.php">
-	<input type="text" name="twitterUser" value="">
-	<select name="cloudSize">
-		<option value="5">5</option>
-		<option value="10">10</option>
-		<option value="15">15</option>
-		<option value="20">20</option>
-		<option value="25" selected="selected">25</option>
-		<option value="50">50</option>
-		<option value="75">75</option>
-		<option value="100">100</option>
-	</select>
-	<input type="submit">
-</form>
+
+<div id="wrapper">
+	<div id="subpage_left">
+		<div class="header"><!--  Would be nice to have something random here --></div>
+		
+		<h1>tweading List</h1>
+		<p>tweading List provides book recommendations based on an analysis of your tweets.
+		To get started, just enter your Twitter account name (or someone elses!) and the number of tweets to analyse into the form below.</p>
+		
+		<strong>Go, recommend!</strong>
+		<form action="index.php">
+			Twitter Account Name: <input type="text" name="twitterUser" value="">&nbsp;
+			No. of Tweets: <select name="cloudSize">
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25" selected="selected">25</option>
+				<option value="50">50</option>
+				<option value="75">75</option>
+				<option value="100">100</option>
+			</select>
+			<input type="submit">
+		</form>
+		<p></p>
 <?php
 
 /* 
  * Load last 100 tweets for the specific user. Break down into tweets themselves, we only need the text (title)
  */ 
 if (isset($_GET['twitterUser'])) {
-
-	$twitterUser = $_GET['twitterUser'];
-	$tweets = file_get_contents("http://search.twitter.com/search.atom?lang=en&q=$twitterUser&rpp=100");
-	$tweetsXML = simplexml_load_string($tweets);
-	$tweetsArray = get_object_vars($tweetsXML);
-	if (!isset($tweetsArray['entry'])){
-		print '<p>Sorry, we couldn\'t find enough tweets to build a cloud for that username.</p>';
-	} else {
-
-		$tweetsArray = $tweetsArray['entry'];
-		// print '<pre>' . print_r($tweetsArray,TRUE) . '</pre>';
-		
-		
-		/*
-		 * Break down the tweets, looking for proper nouns and strings of proper nouns
-		 */
-		// Create an array to hold our search terms.
-		// Create temporary storage for variables
-		$searchTerms = array();
-		$previousWord = '';
-		
-		foreach($tweetsArray as $tweet){
-			// Explode each tweet into words and reset markers.
-			$previousWord = '';
-			$tweetWords = explode(' ',$tweet->title);
-			
-			foreach($tweetWords as $tweetWord){
-				// $searchTerms[$tweetWord] = substr($tweetWord,0,1);
-				$tweetWord = trim($tweetWord);
-				if (substr($tweetWord,0,1) <> '@' && substr($tweetWord,0,1) <> '#' && strlen($tweetWord) > 3){
-					if (substr($tweetWord,0,1) === strtoupper(substr($tweetWord,0,1)) ){
-						// Upper case first character. Therefore a proper noun
-						if (key_exists($tweetWord, $searchTerms)){ $searchTerms[$tweetWord] ++; } else {$searchTerms[$tweetWord] = 1;}
-						unset($searchTerms[$previousWord]);
-						if (strlen($previousWord) > 0){
-							$previousWord = trim($previousWord . ' ' . $tweetWord);
-							if (key_exists($previousWord, $searchTerms)){ $searchTerms[$previousWord] ++; } else {$searchTerms[$previousWord] = 1;}
-						} else {
-							$previousWord = trim($previousWord . ' ' . $tweetWord);
-						}	
-					} else {
-						if (strlen($previousWord) > 0) {
-							$previousWord = '';
-						}
-					}	
-				}
-			}
-		}
-		arsort($searchTerms);
-		
-		/*
-		 * Use the top 10 words to search for books
-		 */
-		$bookCount = 5;
-		$googleSleep = 1;
-		print '<table>';
-		foreach($searchTerms as $searchTerm => $score){
-			// Search for a book
-			$searchTerm = urlencode($searchTerm);
-			$books = file_get_contents("http://books.google.com/books/feeds/volumes?q=$searchTerm&start-index=1&max-results=1"); 
-			$booksXML = simplexml_load_string($books);
-			$booksArray = get_object_vars($booksXML);
-			
-			if (isset($booksArray['entry'])){
-				$book = $booksArray['entry'];
-		
-				/*
-			 	* Output book data
-			 	*/
-				
-				print '<tr><td>';
-				
-				foreach($book->link as $linkData){
-					$links = get_object_vars($linkData);
-					$links = $links['@attributes'];
-					$link_type = array_reverse(explode('/',$links['rel']));
-					$link_type = $link_type['0'];
-					if ($link_type == 'thumbnail'){
-						print '<img src="' . $links['href'] . '">'; 
-					}
-				}
-				
-				print '</td><td>';		
-				print $book->title . '<br>';
-				print '</td><td><ul>';
-						
-				foreach($book->link as $linkData){
-					$links = get_object_vars($linkData);
-					$links = $links['@attributes'];
-					if ($links['type'] == 'text/html'){
-						$link_type = array_reverse(explode('/',$links['rel']));
-						$link_type = $link_type['0'];
-						print '<li><a href="' . $links['href'] . '">' . $link_type . '</a></li>';
-					}
-				}
-				print '</ul></td></tr>';
-				// print '<pre>'  . print_r($book,TRUE) . '</pre><br>';
-				
-				// Decrement book counter
-				$bookCount --;
-				if ($bookCount <= 0) {break;}
-			}
-			
-			// Sleep (if required to support Google API
-			sleep($googleSleep);
-		}
-		
-		ksort($searchTerms);
-		print '<tr><tr><td colspan="2"><h4>Your cloud</h4>';
-		foreach($searchTerms as $searchTerm => $score){
-			$fontsize = -3 + $score;
-			if ($fontsize > 0) { $fontsize = '+' . $fontsize;}
-			print '<font size="' . $fontsize . '">' . $searchTerm . '</font>&nbsp;';
-		}
-		print '</td></tr>';
-		
-		print '</table>';
-		
-	}
-	
+	include 'tweadinglist.php';
+	tweadingList();
 }
 
-
-function my_print_r($data,$return = FALSE){
-	$result = '<pre>' . print_r($data,TRUE) . '</pre><br>';
-	if (!$return) { print $result; } 
-	return $result; 
-}
 ?>
+		<p></p>
+		<h2>How does it work?</h2>
+		
+		<p>tweading List uses the Twitter Search API to grab your most recent tweets
+		and then scans them for proper nouns and other keywords. Once your cloud is built,
+		we use the Google Book Search API to try and find books that you might like.</p>
+		<p>It's random, but we think that at least one in five to one in ten of the recommendations are good!</p>
+		<p>If you like tweadingList, you can <a href="https://github.com/chrislynch/Tweading-List">get your own copy of the code from github</a></p>
+	</div>
+	
+	<div class="divider"></div>
+	<!-- 
+	<div id="more">
+		<div class="twitter">
+			<div class="headline">
+				<h4>App Name on Twitter</h4>
+				<a href="" class="follow fader">Follow us</a>
+			</div>
+			<p><a href="">about 6 hours ago</a> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sedd do eiusmod 
+				tempor incididunt ut labore et dolore magna aliqua.</p>
+				
+			<p><a href="">about 6 hours ago</a> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sedd do eiusmod 
+				tempor incididunt ut labore et dolore magna aliqua.</p>
+		</div>
+		
+		<div class="quote">
+			<div class="headline">
+				<h4>What others are saying</h4>
+			</div>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+			<span class="quote_by"><a href="">Some company name</a></span>
+		</div>
+	</div>
+	 -->
+	<div id="footer">
+		<div class="alignleft"><p>Copyright © 2010 <a href="http://www.engine4.net" title="Chris Lynch">Chris Lynch.</a>  All Rights reserved.</p></div>
+		<div class="alignright">
+			<a href="http://www.planetofthepenguins.com" title="Read the Blog">Read the Blog</a>
+			<span class="divider"></span>
+			<a href="http://www.gravit-e.co.uk" title="Web Development">Web Development</a>
+		</div>
+	</div>
+</div>
+
 </body>
 </html>
