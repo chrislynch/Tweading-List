@@ -1,0 +1,477 @@
+/*  
+Theme Name: Apper - Dark
+Version: 1.0
+Author: Kristoffer Lidman
+Author URI: http://identa.se/
+*/
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 1.5em;
+	background: #454C54;
+	text-shadow: 0 1px 0 #252c32;
+	margin: 0px;
+	padding: 0px;
+}
+
+a  {
+	color: #d8dce1;
+	border: none;
+	outline: none;
+	text-decoration: none;
+}
+a:hover  { color: #fff; }
+*:focus { outline: none; }
+textarea { overflow: auto; resize: none }
+.fader:hover { color: #eee; }
+p { margin: 0 0 15px 0; }
+img  { border: none; }
+
+h1, h2, h3, h4, h5  {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+}
+.alignleft  {
+	float: left;
+}
+.alignright  {
+	float: right;
+}
+/*----- Main wrapper -----*/
+#wrapper  {
+	width: 840px;
+	margin: 20px auto;
+	padding: 0px 0 0 0;
+	overflow: hidden;
+	position: relative;
+}
+/*----- Logo -----*/
+.header {
+	width: 505px;
+	height: 42px;
+	float: left;
+	margin: 0 0 20px 0;
+	font-size: 20px;
+	color: #D8DCE1;
+	padding: 78px 0 0 0;
+}
+/*----- Content container for frontpage -----*/
+#content {
+	width: 840px;
+	float: left;
+	padding: 0 0 15px 0;
+	margin: 0 0 30px 0;
+}
+#content .info {
+	width: 505px;
+	font-size: 18px;
+	float: left;
+}
+#content .info .pitch {
+	width: 505px;
+	height: 280px;
+	float: left;
+	color: #9caebd;
+	padding: 0;
+	line-height: 1.5em;
+}
+#content .info .pitch ul {
+	margin: 20px 0 0 0;
+	color: #d8dce1;
+	list-style-type: none;
+}
+#content .info .pitch ul li {
+	padding: 3px 0 3px 30px;
+}
+/*----- Button container -----*/
+#content .actions {
+	width: 491px;
+	float: left;
+	margin: 0 0 0 15px;
+}
+/*----- Download button -----*/
+.button_download {
+	width: 183px;
+	height: 41px;
+	float: left;
+	color: #fff;
+	font-size: 22px;
+	font-weight: bold;
+	padding: 14px 0 0 57px;
+	text-shadow: 0 1px 1px #52631f;
+}
+/*----- Appstore button -----*/
+.button_appstore {
+	width: 183px;
+	height: 41px;
+	float: left;
+	color: #fff;
+	font-size: 22px;
+	font-weight: bold;
+	padding: 14px 0 0 57px;
+}
+/*----- Read more button -----*/
+.button_read_more {
+	width: 182px;
+	height: 41px;
+	float: right;
+	color: #fff;
+	font-size: 22px;
+	font-weight: bold;
+	padding: 14px 0 0 58px;
+	text-shadow: 0 1px 1px #1b5d76;
+}
+/*------ Subscribe ------*/
+#content .subscribe {
+	width: 490px;
+	height: 55px;
+	float: left;
+	margin: 0 0 0 15px;
+}
+/*----- Textfield -----*/
+#content .subscribe .field {
+	width: 370px;
+	padding: 7px 0 7px 0;
+	margin: 5px 0 0 15px;
+	background: none;
+	border: none;
+	color: #888;
+	font-size: 22px;
+	float: left;
+}
+/*----- Submit -----*/
+#content .subscribe .submit {
+	width: 80px;
+	height: 50px;
+	background: none;
+	margin: 0 5px 0 0;
+	border: none;
+	cursor: pointer;
+	text-indent: -9999px;
+	float: right;
+	font-size: 0;
+	display: block;
+	line-height: 0;
+}
+#content .subscribe .submit:hover {
+	background: #fff;
+	filter: alpha(opacity=10);
+	-moz-opacity: 0.1;
+	-khtml-opacity: 0.1;
+	opacity: 0.1;
+}
+/*------ Phone container ------*/
+#content .phone {
+	width: 295px;
+	height: 470px;
+	float: right;
+	margin: 0;
+}
+/*----- iPhone -----*/
+#content .iphone_image {
+	width: 263px;
+	height: 388px;
+	float: left;
+	padding: 82px 0 0 32px;
+}
+/*----- Nexus -----*/
+#content .nexus_image {
+	width: 229px;
+	height: 420px;
+	float: left;
+	padding: 50px 0 0 34px;
+}
+/*----- Monitor -----*/
+#content .webapp {
+	width: 317px;
+	height: 330px;
+	float: right;
+	margin: 140px 0 0 0;
+}
+#content .webapp_image {
+	width: 276px;
+	height: 173px;
+	background: #fff;
+	margin: 24px 0 0 16px;
+}
+/*----- Price badge -----*/
+#badge {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+/*------ Subpage ------*/
+#subpage_left {
+	width: 505px;
+	float: left;
+	color: #8096ab;
+}
+#subpage_right {
+	width: 290px;
+	padding: 144px 0 0 0;
+	float: right;
+	color: #8096ab;
+}
+/*------ Right column ------*/
+#subpage_right .box {
+	width: 240px;
+	padding: 25px 175px 0 25px;
+	float: left;
+}
+#subpage_right .box_bottom {
+	width: 290px;
+	height: 25px;
+	float: left;
+	margin: 0 0 30px 0;
+}
+/*------ Menu ------*/
+#subpage_right .box ul {
+	margin: -5px 0 -4px 0;
+	padding: 0;
+	list-style-type: none;
+}
+#subpage_right .box ul li {
+	margin: 0;
+	padding: 6px 0 6px 33px;
+	font-weight: bold;
+	font-size: 18px;
+}
+#subpage_right .box ul li.active a {
+	color: #fff;
+}
+#subpage_right .box ul li.active {
+}
+/*------ Headline and paragraph -----*/
+#subpage_right .box p {
+	margin: 0 0 7px 5px;
+}
+#subpage_right .box .headline {
+	color: #fff;
+	font-weight: bold;
+	font-size: 20px;
+	float: left;
+	width: 240px;
+	margin: 0 0 10px 5px;
+	text-transform: uppercase;
+}
+#subpage_right .box .sidebar {
+	margin: 0 0 25px 0;
+}
+/*------ Left column ------*/
+#subpage_left .header {
+	margin: 0 0 20px 0;
+	color: #D8DCE1;
+}
+#subpage_left h1, #subpage_left h2, #subpage_left h3 {
+	margin: 0 0 15px 0;
+	font-size: 28px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	line-height: 1.1em;
+}
+#subpage_left h2 {
+	font-size: 24px;
+}
+#subpage_left h3 {
+	font-size: 20px;
+}
+#subpage_left h4, #subpage_left h5 {
+	font-size: 18px;
+}
+#subpage_left strong {
+	color: #fff;
+}
+#subpage_left ul {
+	list-style-type: none;
+	margin: 2px 0 20px 10px;
+}
+#subpage_left ul li {
+	padding: 3px 0 3px 17px;
+}
+.divider {
+	width: 840px;
+	height: 20px;
+	float: left;
+	margin: 0 0 30px 0;
+}
+/*----- Contactform -----*/
+dl.form {
+	width: 505px;
+	float: left;
+	margin: 0 0 15px 0;
+}
+dl.form dt {
+	width: 140px;
+	height: 36px;
+	float: left;
+	color: #fff;
+	font-size: 16px;
+	padding: 4px 0 0 0;
+	font-weight: bold;
+}
+dl.form dd {
+	width: 360px;
+	height: 40px;
+	float: right;
+}
+dl.form dd .field {
+	width: 270px;
+	padding: 5px 10px 10px 10px;
+	float: left;
+	line-height: 0;
+	font-size: 13px;
+	text-shadow: 0 1px 0 #fff;
+	border: none;
+}
+dl.form dd .textarea {
+	width: 330px;
+	height: 110px;
+	padding: 5px 10px 10px 10px;
+	float: left;
+	text-shadow: 0 1px 0 #fff;
+	border: none;
+}
+dl.form dd.big {
+	height: auto;
+}
+#submit {
+	width: 130px;
+	float: right;
+	margin: 0 10px 0 0;
+	padding: 5px 0 8px 0;
+	font-weight: bold;
+	font-size: 16px;
+	color: #fff;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	text-shadow: 0 1px 1px #52631f;
+	border: none;
+	outline: none;
+}
+/*----- Webkit and IE fixes for form -----*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+dl.form dd .field {
+	padding: 0px 10px 15px 10px;
+}
+#submit {
+	padding: 7px 0 9px 0;
+}
+}
+dl.form dd .field {
+	padding: 12px 10px 10px 10px\9;
+}
+#submit {
+	padding: 6px 0 10px 0\9;
+}
+/*----- Twitter and quote container -----*/
+#more {
+	width: 840px;
+	float: left;
+	padding: 0 0 30px 0;
+	margin: 0 0 20px 0;
+	color: #8096ab;
+}
+#more a {
+	border-bottom: 1px dotted #fff;
+}
+#more .twitter {
+	width: 460px;
+	float: left;
+	padding: 0 32px 0 0;
+	border-right: 1px solid #485561;
+}
+#more .twitter .headline {
+	width: 460px;
+	float: left;
+}
+#more .twitter .headline .follow {
+	width: 70px;
+	height: 19px;
+	float: right;
+	text-indent: -9999px;
+	border: none;
+}
+/*----- Quote -----*/
+#more .quote {
+	width: 310px;
+	float: right;
+}
+#more .quote .headline {
+	width: 310px;
+	float: left;
+}
+#more .quote p {
+	line-height: 1.5em;
+	padding: 0 0 0 53px;
+	font-style: italic;
+	font-size: 16px;
+	float: left;
+	margin: 0 0 10px 0;
+}
+#more .quote .quote_by {
+	float: right;
+}
+#more .quote .quote_by a {
+	font-weight: bold;
+	font-size: 14px;
+}
+/*----- Headline -----*/
+#more .twitter h4, #more .quote h4 {
+	width: 83%;
+	font-size: 18px;
+	color: #fff;
+	float: left;
+	margin: 0 0 15px 0;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+/*------ Validation message -----*/
+.error_message, .ok_message {
+	width: 460px;
+	padding: 15px 20px 0 20px;
+	float: left;
+	color: #8096ab;
+	font-size: 14px;
+	font-weight: bold;
+}
+.error_message p, .ok_message p {
+	margin: 0;
+	padding: 0 0 0 30px;
+}
+.error_message p {
+}
+.ok_message p {
+
+}
+.msg_bottom {	
+	width: 500px;
+	height: 15px;
+	float: left;
+	margin: 0 0 30px 0;
+}
+/*------ Footer ------*/
+#footer {
+	width: 840px;
+	float: left;
+	margin: 0;
+	color: #8096ab;
+}
+#footer .divider {	
+	height: 16px;
+	width: 16px;
+	margin: 0 10px;
+	float: right;
+}
+#footer a {
+	font-weight: bold;
+}
+#footer .alignright a {
+	float: right;
+}
