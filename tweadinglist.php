@@ -5,6 +5,9 @@ function tweadingList(){
 	$tweets = file_get_contents("http://search.twitter.com/search.atom?lang=en&q=$twitterUser&rpp=100");
 	$tweetsXML = simplexml_load_string($tweets);
 	$tweetsArray = get_object_vars($tweetsXML);
+	
+	$return = array();
+	
 	if (!isset($tweetsArray['entry'])){
 		print '<p>Sorry, we couldn\'t find enough tweets to build a cloud for that username.</p>';
 	} else {
@@ -53,9 +56,9 @@ function tweadingList(){
 		/*
 		 * Use the top 10 words to search for books
 		 */
-		$bookCount = 5;
-		$googleSleep = 1;
-		print '<h2>Your Recommendations</h2><table>';
+		$bookCount = 8;
+		$googleSleep = 250;
+		// print '<h2>Your Recommendations</h2><table>';
 		foreach($searchTerms as $searchTerm => $score){
 			// Search for a book
 			$searchTerm = urlencode($searchTerm);
@@ -65,26 +68,29 @@ function tweadingList(){
 			
 			if (isset($booksArray['entry'])){
 				$book = $booksArray['entry'];
-		
+				$returnbook = array();
 				/*
 			 	* Output book data
 			 	*/
 				
-				print '<tr><td>';
+				// print '<tr><td>';
 				
 				foreach($book->link as $linkData){
+					
 					$links = get_object_vars($linkData);
 					$links = $links['@attributes'];
 					$link_type = array_reverse(explode('/',$links['rel']));
 					$link_type = $link_type['0'];
 					if ($link_type == 'thumbnail'){
-						print '<img src="' . $links['href'] . '">'; 
+						// print '<img src="' . $links['href'] . '">';
+						$returnbook['img'] = $links['href']; 
 					}
 				}
 				
-				print '</td><td><h4>';		
-				print $book->title . '<br>';
-				print '</h4></td><td><ul>';
+				// print '</td><td><h4>';		
+				// print $book->title . '<br>';
+				// print '</h4></td><td><ul>';
+				$returnbook['title'] = $book->title;
 						
 				foreach($book->link as $linkData){
 					$links = get_object_vars($linkData);
@@ -92,22 +98,25 @@ function tweadingList(){
 					if ($links['type'] == 'text/html'){
 						$link_type = array_reverse(explode('/',$links['rel']));
 						$link_type = $link_type['0'];
-						print '<li><a href="' . $links['href'] . '">' . $link_type . '</a></li>';
+						// print '<li><a href="' . $links['href'] . '">' . $link_type . '</a></li>';
+						$returnbook[$link_type] = $links['href'];
 					}
 				}
-				print '</ul></td></tr>';
+				// print '</ul></td></tr>';
 				// print '<pre>'  . print_r($book,TRUE) . '</pre><br>';
 				
 				// Decrement book counter
 				$bookCount --;
 				if ($bookCount <= 0) {break;}
+				$return[] = $returnbook;
 			}
 			
 			// Sleep (if required to support Google API
-			sleep($googleSleep);
+			usleep($googleSleep);
 		}
 		
 		ksort($searchTerms);
+		/*
 		print '<tr><tr><td colspan="2"><h4>Your cloud</h4>';
 		foreach($searchTerms as $searchTerm => $score){
 			$fontsize = -3 + $score;
@@ -117,8 +126,9 @@ function tweadingList(){
 		print '</td></tr>';
 		
 		print '</table>';
-		
+		*/
 	}
+	return $return;
 }
 
 function my_print_r($data,$return = FALSE){

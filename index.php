@@ -13,9 +13,8 @@
 
 <div id="wrapper">
 	<div id="subpage_left">
-		<div class="header"><!--  Would be nice to have something random here --></div>
-		
-		<h1>tweading List</h1>
+		<img src="images/logo.png"></img><br><br>
+		<h1>Welcome to tweading List</h1>
 		<p>tweading List provides book recommendations based on an analysis of your tweets.
 		To get started, just enter your Twitter account name (or someone elses!) and the number of tweets to analyse into the form below.</p>
 		
@@ -42,9 +41,18 @@
  */ 
 if (isset($_GET['twitterUser'])) {
 	include 'tweadinglist.php';
-	tweadingList();
-}
-
+	$books = tweadingList();
+	if(sizeof($books)> 0 ){
+		print '<h2>Your Recommendations</h2>';
+		print '<ul>';
+		foreach($books as $book){
+			if (isset($book['img'])){
+				print '<a href="' . $book['info'] . '"><img src="' . $book['img'] . '" title="' . $book['title'] . '" alt="' . $book['title'] . '"></a>&nbsp;&nbsp;&nbsp;';	
+			}
+			
+		}
+		print '</ul>';	
+	
 ?>
 		<p></p>
 		<h2>How does it work?</h2>
@@ -54,8 +62,20 @@ if (isset($_GET['twitterUser'])) {
 		we use the Google Book Search API to try and find books that you might like.</p>
 		<p>It's random, but we think that at least one in five to one in ten of the recommendations are good!</p>
 		<p>If you like tweadingList, you can <a href="https://github.com/chrislynch/Tweading-List">get your own copy of the code from github</a></p>
-	</div>
 	
+<?php 
+	}
+}
+?>	
+
+</div>
+	<div id="subpage_right">
+	<br><br>
+	<h1>Support tweadingList</h1><br>
+	<p>Like tweadingList? Buy a copy of the latest graphic novel from its creator, Chris Lynch</p>
+	<iframe src="http://rcm-uk.amazon.co.uk/e/cm?t=chrislynch&o=2&p=8&l=as1&asins=1905692374&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+	</div>
+
 	<div class="divider"></div>
 	<!-- 
 	<div id="more">
@@ -86,6 +106,8 @@ if (isset($_GET['twitterUser'])) {
 			<a href="http://www.planetofthepenguins.com" title="Read the Blog">Read the Blog</a>
 			<span class="divider"></span>
 			<a href="http://www.gravit-e.co.uk" title="Web Development">Web Development</a>
+			<span class="divider"></span>
+			<a href="http://www.twitlogo.com/" title="http://www.twitlogo.com/">Logo by twitlogo.com</a>
 		</div>
 	</div>
 </div>
